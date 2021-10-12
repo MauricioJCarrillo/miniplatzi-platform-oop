@@ -1,122 +1,118 @@
-// Creamos el obejto literal natalia
-const natalia = {
-    name: "Natalia",
-    age: 20,
-    cursosAprobados: [
-        "Curso Definitivo de HTML y CSS",
-        "Curso Practico de HTML y CSS"
-    ],
-    aprobarCurso(nuevoCursoAprovado){
-        this.cursosAprobados.push(nuevoCursoAprovado); 
-    },
-};
-// Método que hace que Natalia apruebe otro curso
-natalia.cursosAprobados.push("Curso de Responsive Design");
-// Creación del prototipo "Student" para crear instancias "copias" de objetos
-function Student(name, age, cursosAprobados){
-    this.name = name;
-    this.age = age;
-    this.cursosAprobados = cursosAprobados;
-    // Los metodos dentro de los prototipos se aconseja colocarlos por fuera.
-    // this.aprobarCurso = function (nuevoCursoAprovado) {
-    //     this.cursosAprobados.push(nuevoCursoAprovado);
-    // }
-}
-// Método del prototipo Student utilizado por fuera del prototipo
-Student.prototype.aprobarCurso = function (nuevoCursoAprovado) {
-    this.cursosAprobados.push(nuevoCursoAprovado);
-}
-// Creación de una instancia del prototipo Student
-const juanita = new Student(
-    "Juanita Alejandra",
-    15,
-    [
-        "Curso de Introducción a la producción de Videojuegos",
-        "Curso de Creación de Personajes",
-    ],
-);
-// Prototipo con la sintaxis de clases
-class Student2 {
-    constructor(name, age, cursosAprobados) {
+class Student {
+    constructor({
+        name, 
+        email,
+        username,
+        twitter = undefined,
+        instagram = undefined,
+        facebook = undefined,
+        cursosAprobados = [],
+        learningPaths = [],
+    }) {
         this.name = name;
-        this.age = age;
+        this.email = email;
+        this.username = username;
+        this.socialMedia = {
+            twitter,
+            instagram,
+            facebook,
+        };
         this.cursosAprobados = cursosAprobados;
+        this.learningPaths = learningPaths;
     }
-    aprobarCurso(nuevoCursoAprovado) {
-        this.cursosAprobados.push(nuevoCursoAprovado);
-    }    
 }
-// Creación de instancia del prototipo Clase Student2
-const miguelito = new Student2(
-    "Miguel",
-    28,
-    [
-        "Curso Análisis de Negocios para Ciencia de Datos",
-        "Curso de Principios de Visualización de Datos para BI",
-    ],
-); 
-// Otros objetos literales
-const juan1 = {
+class LearningPaths {
+    constructor({
+        name,
+        courses = [],
+    }){
+        this.name = name;
+        this.courses = courses;        
+    }
+    agregarCurso(nuevoCursoAgregado){
+        this.courses.push(nuevoCursoAgregado);           
+    }
+    elimininarCurso(nuevoCursoEliminado){
+        this.courses.pop(nuevoCursoEliminado);           
+    }
+}
+class Course {
+    constructor({
+        name,
+        classes = [],
+    }){
+        this.name = name;
+        this.classes = classes;        
+    }
+}
+// Nuevas instancias de la clase Student, no importa el orden de los parametros (RORO).
+const juan = new Student({
     name: "JuanDC",
     username: "juandc",
-    points: 100,
-    socialMedia: {
-        twitter: "fjuandc",
-        instagram: "fjuandc",
-        facebook: undefined,        
-    },
-    cursosAprobados: [
-        "Curso Definitivo de HTML y CSS",
-        "Curso Practico de HTML y CSS",
-    ],
+    email: "juanito@juanito.com", 
+    twitter: "fjuandc", 
     learningPaths: [
-        {
-            name: "Escuela de Desarrollo Web",
-            courses: [
-                "Curso Definitivo de HTML y CSS",
-                "Curso Practico de HTML y CSS",
-                "Curso de responsive design",
-            ],
-        },
-        {
-            name: "Escuela de Video Juegos",
-            courses: [
-                "Curso Introducción a la producción de Vjs",
-                "Curso de Unreal Engine",
-                "Curso de Unity 3D",
-            ],
-        },
+        escuelaDesarrolloWeb,
+        escuelaVideoJuegos,
     ],
-}
-const miguelito1 = {
+});
+const miguelito = new Student({
     name: "Miguelito",
     username: "miguelitofeliz",
-    points: 1000,
-    socialMedia: {
-        twitter: "miguelitofeliz",
-        instagram: "miguelito_feliz",
-        facebook: undefined,        
-    },
-    cursosAprobados: [
-        "Curso DataBusiness",
-        "Curso DataViz",
-    ],
+    email: "miguelito@miguelito.com", 
+    instagram: "miguelito_feliz",
     learningPaths: [
-        {
-            name: "Escuela de Desarrollo Web",
-            courses: [
-                "Curso Definitivo de HTML y CSS",
-                "Curso Practico de HTML y CSS",
-                "Curso de responsive design",
-            ],
-        },
-        {
-            name: "Escuela de Data Science",
-            courses: [
-                "Curso DataBusiness",
-                "Curso DataViz",
-                "Curso Tableau",
-            ],
-        },
+        escuelaDesarrolloWeb,
+        escuelaDataScientist,
+    ], 
+})
+// Nuevas instancias de la clase LearningPath
+const escuelaDesarrolloWeb = new LearningPaths({
+    name: "Escuela de Desarrollo Web",
+    courses: [
+        cursoProgBasica,
+        cursoDefinitvoHTML,
+        cursoPracticoHTML,
     ],
-}
+});
+const escuelaDataScientist = new LearningPaths({
+    name: "Escuela de Data Scientist",
+    courses: [
+        cursoProgBasica,
+        "Curso de DataBusiness",
+        "Curso de DataViz",
+    ],
+});
+const escuelaVideoJuegos = new LearningPaths({
+    name: "Escuela de Video Juegos",
+    courses: [
+        cursoProgBasica,
+        "Curso de producción de Video Juegos",
+        "Curso de Unity 3D",
+    ],
+});
+// Nuevas instancias de la clase Course
+const cursoProgBasica = new Course({
+    name: "Curso Gratis de Programación básica",
+    classes: [
+        "1. Introducción",
+        "2. Desarrollo básico",
+        "3. Desarrollo avanzado",
+    ],
+});
+const cursoDefinitvoHTML = new Course({
+    name: "Curso Definitivo de HTML y CSS",
+    classes: [
+        "1. Introducción",
+        "2. Definitivo básico",
+        "3. Definitivo avanzado",
+    ],
+});
+const cursoPracticoHTML = new Course({
+    name: "Curso Práctico de HTML y CSS",
+    classes: [
+        "1. Introducción",
+        "2. Práctico básico",
+        "3. Práctico avanzado",
+    ],
+});
